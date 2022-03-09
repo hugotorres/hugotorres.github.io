@@ -34,11 +34,11 @@ canvas {
   
   <script>
   new Vue({
-    data: () => ({ message: 'Row' }),
+    data: () => ({ message: '?' }),
     template: `
     <div>
-      <h1>{{message}} your boat</h1>
-      <button v-on:click="message += ' row'">Add</button>
+      <h1>{{message}}</h1>
+      <button v-on:click="message += '1'">&#x2714;</button>
     </div>
     `
   }).$mount('#content');
