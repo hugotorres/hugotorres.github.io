@@ -34,7 +34,12 @@ canvas {
   
   <script>
   new Vue({
-    data: () => ({ message: '?' }),
+    data: () => ({ message: this.randomNumber() }),
+    methods : {
+    randomNumber : function(){
+      return Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+    }
+  },
     template: `
     <div>
       <h1>{{message}}</h1>
