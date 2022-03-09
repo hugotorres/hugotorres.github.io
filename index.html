@@ -34,7 +34,7 @@ canvas {
   
   <script>
   new Vue({
-    data: () => ({ message: this.randomNumber() }),
+    data: () => ({ message: randomNumber() }),
     methods : {
     randomNumber : function(){
       return Math.floor(Math.random() * (10 - 1 + 1)) + 1;
