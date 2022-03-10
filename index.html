@@ -31,13 +31,13 @@ canvas {
       <div id="content"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.x"></script>
-  
+<script type="text/javascript" language="javascript" src="priorities.json"></script> 
   <script>
   new Vue({
-    data: () => ({ message: false }),
+    data: () => ({ message: 1 }),
     methods : {
     randomNumber : function(){
-      return Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+      return Math.floor(Math.random() * (3)) + 1;
     }
   },
     template: `
