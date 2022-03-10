@@ -31,7 +31,7 @@ canvas {
       <div id="content"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.x"></script>
-<script type="text/javascript" language="javascript" src="priorities.json"></script> 
+<script type="text/javascript" language="javascript" src="images.json"></script> 
   <script>
   new Vue({
     data: () => ({ message: 1 }),
@@ -43,6 +43,7 @@ canvas {
     template: `
     <div>
       <h1>{{message}}</h1>
+      {{images}}
       <img src="images/doom.PNG" width="50%"/>
       <button v-on:click="message=randomNumber()">&#x2714;</button>
     </div>
