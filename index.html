@@ -34,7 +34,7 @@ canvas {
 <script type="text/javascript" language="javascript" src="images.json"></script> 
   <script>
   new Vue({
-    data: () => ({ message: 1 }),
+    data: () => ({ image: 1 }),
     methods : {
     randomNumber : function(){
       return Math.floor(Math.random() * (3)) + 1;
@@ -42,10 +42,10 @@ canvas {
   },
     template: `
     <div>
-      <h1>{{message}}</h1>
+      <h1>{{images[image]}}</h1>
       {{images}}
       <img src="images/doom.PNG" width="50%"/>
-      <button v-on:click="message=randomNumber()">&#x2714;</button>
+      <button v-on:click="image=randomNumber()">&#x2714;</button>
     </div>
     `
   }).$mount('#content');
