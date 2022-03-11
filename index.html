@@ -42,9 +42,7 @@ canvas {
   },
     template: `
     <div>
-      <h1>{{images[image]}}</h1>
-      {{images}}
-      <img src="images/doom.PNG" width="50%"/>
+      <img :src="{{images[image].src}}" width="50%"/>
       <button v-on:click="image=randomNumber()">&#x2714;</button>
     </div>
     `
