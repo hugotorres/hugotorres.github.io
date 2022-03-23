@@ -29,6 +29,7 @@ canvas {
 <body >
   
       <div id="content"></div>
+      <div id="hola"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.x"></script>
 <script type="text/javascript" language="javascript" src="images.json"></script> 
@@ -47,6 +48,22 @@ canvas {
     </div>
     `
   }).$mount('#content');
+</script>
+
+<script>
+  new Vue({
+    data: () => ({ image: 1 }),
+    methods : {
+    randomNumber : function(){
+      return Math.floor(Math.random() * (3)) + 1;
+    }
+  },
+    template: `
+    <div>
+    <h1>Hola</h1>
+    </div>
+    `
+  }).$mount('#hola');
 </script>
 </body>
 </html>
