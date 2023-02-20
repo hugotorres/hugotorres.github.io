@@ -1,69 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Three.js App</title>
+    <style>
+      body {
+        margin: 0;
+      }
 
-  <title>Hugo Torres</title>
-  <meta name="description" content="Portfolio">
-  <meta name="author" content="Hugo torres">
-
-  <meta property="og:title" content="Hugo torres Portfolio">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.linkedin.com/hugotorreslinares">
-  <meta property="og:description" content="Hugo Torres Portfolio">
-  <meta property="og:image" content="image.png">
-
-  <link rel="icon" href="/favicon.ico">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
-<style>
-canvas {
-    border:1px solid #d3d3d3;
-    background-color: #f1f1f1;
-}
-</style>
-</head>
-<body >
-  
-      <div id="content">   </div>
-   <div id="hola"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/vue@2.x"></script>
-<script type="text/javascript" language="javascript" src="images.json"></script> 
-  <script>
-  new Vue({
-    data: () => ({ image: 1 }),
-    methods : {
-    randomNumber : function(){
-      return Math.floor(Math.random() * (3)) + 1;
-    }
-  },
-    template: `
-    <div>
-      <img src="{{images[image].src}}" width="50%"/>
-      <button v-on:click="image=randomNumber()">&#x2714;</button>
-    </div>
-    `
-  }).$mount('#content');
-</script>
-
-<script>
-  new Vue({
-    data: () => ({ image: 1 }),
-    methods : {
-    randomNumber : function(){
-      return Math.floor(Math.random() * (3)) + 1;
-    }
-  },
-    template: `
-    <div>
-    <h1>Hola</h1>
-    </div>
-    `
-  }).$mount('#hola');
-</script>
-</body>
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
 </html>
