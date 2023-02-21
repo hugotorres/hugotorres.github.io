@@ -1,100 +1,59 @@
-// Scene
-const scene = new THREE.Scene();
+ // Create scene, camera, and renderer
+ const scene = new THREE.Scene();
+ const camera = new THREE.PerspectiveCamera(
+   75,
+   window.innerWidth / window.innerHeight,
+   0.1,
+   1000
+ );
+ const renderer = new THREE.WebGLRenderer();
+ renderer.setSize(window.innerWidth, window.innerHeight);
+ document.body.appendChild(renderer.domElement);
 
-// Camera
-const camera = new THREE.PerspectiveCamera(
-  75, // Field of view
-  window.innerWidth / window.innerHeight, // Aspect ratio
-  0.1, // Near clipping plane
-  1000 // Far clipping plane
-);
+ // Create cube and add to scene
+ const geometry = new THREE.BoxGeometry(1, 1, 1);
+ const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+ const cube = new THREE.Mesh(geometry, material);
+ scene.add(cube);
 
-// Renderer
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+ // Set cube initial position and velocity
+ cube.position.set(0, 0, 0);
+ const cubeVelocity = new THREE.Vector3(0.05, 0.1, 0.05);
 
-// Cube
-const geometry = new THREE.BoxGeometry();
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-const cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
+ // Create social media banner
+ const bannerGeometry = new THREE.PlaneGeometry(5, 0.5);
+ const bannerMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+ const banner = new THREE.Mesh(bannerGeometry, bannerMaterial);
+ banner.position.set(0, -window.innerHeight / 2 + 0.25, 0);
+ scene.add(banner);
 
-// Set initial cube velocity
-let cubeVelocity = new THREE.Vector3(0.05, 0.05, 0);
+ // Render loop function
+ function animate() {
+   requestAnimationFrame(animate);
 
-// Position camera
-camera.position.z = 5;
+   // Move cube based on velocity
+   cube.position.add(cubeVelocity);
 
-// Banner
-const bannerGeometry = new THREE.PlaneGeometry(window.innerWidth, 100);
-const bannerMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-const banner = new THREE.Mesh(bannerGeometry, bannerMaterial);
-banner.position.y = -window.innerHeight / 2 + 50;
-scene.add(banner);
+   // Check for cube collision with screen border
+   if (
+     cube.position.x + 1 > window.innerWidth / 2 ||
+     cube.position.x - 1 < -window.innerWidth / 2
+   ) {
+     cubeVelocity.x *= -1;
+   }
+   if (
+     cube.position.y + 1 > window.innerHeight / 2 ||
+     cube.position.y - 1 < -window.innerHeight / 2
+   ) {
+     cubeVelocity.y *= -1;
+   }
+   if (cube.position.z + 1 > 10 || cube.position.z - 1 < -10) {
+     cubeVelocity.z *= -1;
+   }
 
-// Social media icons
-const facebookGeometry = new THREE.PlaneGeometry(50, 50);
-const facebookMaterial = new THREE.MeshBasicMaterial({
-  color: 0x3b5998,
-  map: new THREE.TextureLoader().load('https://i.imgur.com/78dgy5A.png')
-});
-const facebookIcon = new THREE.Mesh(facebookGeometry, facebookMaterial);
-facebookIcon.position.x = -window.innerWidth / 2 + 50;
-facebookIcon.position.y = -window.innerHeight / 2 + 25;
-banner.add(facebookIcon);
+   // Render the scene
+   renderer.render(scene, camera);
+ }
 
-const twitterGeometry = new THREE.PlaneGeometry(50, 50);
-const twitterMaterial = new THREE.MeshBasicMaterial({
-  color: 0x1da1f2,
-  map: new THREE.TextureLoader().load('https://i.imgur.com/gWqpX5p.png')
-});
-const twitterIcon = new THREE.Mesh(twitterGeometry, twitterMaterial);
-twitterIcon.position.x = -window.innerWidth / 2 + 150;
-twitterIcon.position.y = -window.innerHeight / 2 + 25;
-banner.add(twitterIcon);
-
-const instagramGeometry = new THREE.PlaneGeometry(50, 50);
-const instagramMaterial = new THREE.MeshBasicMaterial({
-  color: 0xffc107,
-  map: new THREE.TextureLoader().load('https://i.imgur.com/fTtLx0S.png')
-});
-const instagramIcon = new THREE.Mesh(instagramGeometry, instagramMaterial);
-instagramIcon.position.x = -window.innerWidth / 2 + 250;
-instagramIcon.position.y = -window.innerHeight / 2 + 25;
-banner.add(instagramIcon);
-
-// Render loop
-function animate() {
-  requestAnimationFrame(animate);
-
-  // Move cube
-  cube.position.add(cubeVelocity);
-
-  // Check if cube is hitting the screen border
-  if (cube.position.x + 1 > window.innerWidth / 2 || cube.position.x - 1 < -window.innerWidth / 2) {
-    cubeVelocity.x *= -1;
-  }
-
-  if (cube.position.y + 1 > window.innerHeight / 2 || cube.position.y - 1 < -window.innerHeight / 2) {
-    cubeVelocity.y *= -1;
-  }
-
-  // Rotate cube
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
-
-  renderer.render(scene, camera);
-}
-
-// Reverse cube velocity on click
-function onCubeClick() {
-  cubeVelocity.multiplyScalar(-1);
-}
-
-// Add click listener to cube
-
-
-cube.addEventListener('click', onCubeClick);
-
-animate();
+ // Run the animation loop
+ animate();
