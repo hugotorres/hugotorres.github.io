@@ -1,60 +1,97 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-    <title>Sliding Circle App</title>
+    <title>Circle Slider Game</title>
     <style>
-      #grid-container {
+      #gameboard {
+        position: relative;
         width: 500px;
         height: 500px;
-        position: relative;
         border: 1px solid black;
+        margin: 20px;
       }
-
       #circle {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: blue;
         position: absolute;
-        top: 225px;
-        left: 225px;
+        top: 0;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      .balloon {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-color: blue;
+        border-radius: 50%;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
-    <div id="grid-container">
+    <div id="gameboard">
       <div id="circle"></div>
-    </div>
-    <script>
-      const circle = document.getElementById('circle');
-      let dragging = false;
+      <script>
+        const gameboard = document.getElementById('gameboard');
+        const circle = document.getElementById('circle');
+        const balloons = [];
 
-      // Event listeners to handle dragging the circle
-      circle.addEventListener('mousedown', () => {
-        dragging = true;
-      });
-
-      document.addEventListener('mousemove', event => {
-        if (dragging) {
-          const x = event.clientX;
-          const y = event.clientY;
-          const container = document.getElementById('grid-container');
-          const containerRect = container.getBoundingClientRect();
-          const offsetX = containerRect.left;
-          const offsetY = containerRect.top;
-          const maxX = container.offsetWidth - circle.offsetWidth;
-          const maxY = container.offsetHeight - circle.offsetHeight;
-          const circleX = Math.min(Math.max(x - offsetX - circle.offsetWidth / 2, 0), maxX);
-          const circleY = Math.min(Math.max(y - offsetY - circle.offsetHeight / 2, 0), maxY);
-          circle.style.left = `${circleX}px`;
-          circle.style.top = `${circleY}px`;
+        // Add balloons to the gameboard
+        for (let i = 0; i < 10; i++) {
+          const balloon = document.createElement('div');
+          balloon.classList.add('balloon');
+          balloon.style.top = Math.random() * (gameboard.offsetHeight - balloon.offsetHeight) + 'px';
+          balloon.style.left = Math.random() * (gameboard.offsetWidth - balloon.offsetWidth) + 'px';
+          gameboard.appendChild(balloon);
+          balloons.push(balloon);
         }
-      });
 
-      document.addEventListener('mouseup', () => {
-        dragging = false;
-      });
-    </script>
+        // Update coordinates on every circle move
+        circle.addEventListener('mousemove', function(event) {
+          const x = event.clientX - gameboard.offsetLeft - circle.offsetWidth / 2;
+          const y = event.clientY - gameboard.offsetTop - circle.offsetHeight / 2;
+          circle.style.top = Math.max(0, Math.min(y, gameboard.offsetHeight - circle.offsetHeight)) + 'px';
+          circle.style.left = Math.max(0, Math.min(x, gameboard.offsetWidth - circle.offsetWidth)) + 'px';
+          updateCoordinates();
+          checkCollisions();
+        });
+
+        // Display current coordinates
+        function updateCoordinates() {
+          const x = parseInt(circle.style.left) + circle.offsetWidth / 2;
+          const y = parseInt(circle.style.top) + circle.offsetHeight / 2;
+          const coords = document.createElement('div');
+          coords.innerHTML = `(${x}, ${y})`;
+          coords.style.position = 'absolute';
+          coords.style.bottom = '10px';
+          coords.style.right = '10px';
+          gameboard.appendChild(coords);
+        }
+
+        // Check for collisions between circle and balloons
+        function checkCollisions() {
+          for (let i = 0; i < balloons.length; i++) {
+            const balloon = balloons[i];
+            if (collisionDetection(circle, balloon)) {
+              alert('Game over!');
+            }
+          }
+        }
+
+        // Detect collisions between two elements
+        function collisionDetection(elem1, elem2) {
+          const rect1 = elem1.getBoundingClientRect();
+          const rect2 = elem2.getBoundingClientRect();
+          return (
+            rect1.left < rect2.left + rect2.width &&
+            rect1.left + rect1.width > rect2.left &&
+            rect1.top < rect2.top + rect2.height &&
+            rect1.top + rect1.height > rect2.top
+          );
+        }
+      </script>
+    </div>
   </body>
 </html>
